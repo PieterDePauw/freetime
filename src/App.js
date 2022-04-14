@@ -1,22 +1,20 @@
-import React from "react";
 import "antd/dist/antd.css";
-import "./styles.css";
-import { Layout } from "antd";
-import Footer from "./components/Footer";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./features/home/Home";
+import "./styles.css";
+import Landing from "./features/landing/Landing";
+import NotFound from "./components/NotFound";
 
 export default function App() {
   return (
-    <Layout
-      style={{
-        padding: "0 20px",
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh"
-      }}
-    >
-      <Home />
-      <Footer />
-    </Layout>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<Landing/> } >
+          <Route path="home" element={<Home />} />
+        </Route>
+        <Route path="*" element={<NotFound/>}/>
+      </Routes>
+    </Router>
   );
 }

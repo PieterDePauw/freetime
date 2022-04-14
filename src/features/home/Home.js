@@ -1,11 +1,11 @@
-import { Layout, Row, Col, DatePicker, TimePicker, Space, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { Button, Col, DatePicker, Layout, Row, Space, TimePicker } from "antd";
 import SideBar from "./components/SideBar";
 const { Content } = Layout;
 
 function Home() {
   return (
-    <Layout style={{ flexGrow: 1 }}>
+    <>
       <SideBar />
 
       <Content style={{ padding: "24px", backgroundColor: "#FFFFFF" }}>
@@ -21,7 +21,7 @@ function Home() {
           </Col>
         </Row>
       </Content>
-    </Layout>
+    </>
   );
 }
 export default Home;
