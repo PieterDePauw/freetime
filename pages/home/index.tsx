@@ -1,7 +1,7 @@
-import { SearchOutlined } from "@ant-design/icons";
-import { Button, Col, DatePicker, Layout, Row, Space, TimePicker } from "antd";
-import SideBar from "./components/SideBar";
-const { Content } = Layout;
+import { SearchOutlined } from "@ant-design/icons"
+import { Button, Col, DatePicker, Layout, Row, Space, TimePicker } from "antd"
+import SideBar from "./side_bar"
+const { Content } = Layout
 
 function Home() {
   return (
@@ -22,6 +22,6 @@ function Home() {
         </Row>
       </Content>
     </>
-  );
+  )
 }
-export default Home;
+export default Home

@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import { CalendarOutlined } from "@ant-design/icons";
-import { Menu, Layout, Checkbox } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react"
+import { CalendarOutlined } from "@ant-design/icons"
+import { Menu, Layout, Checkbox } from "antd"
+import { useSelector } from "react-redux"
+import { selectCalendars } from "../../redux/calendarsSlice"
 
-const { SubMenu } = Menu;
-const { Sider } = Layout;
+const { SubMenu } = Menu
+const { Sider } = Layout
+
 function SideBar() {
-  const calendars = useSelector((state) => state.calendars.data);
-  const {
-    selectedCalendars,
-    addToSelectedCalendars: setSelectedCalendars
-  } = useState([]);
-  const renderedCalendars = calendars.map((calendar) => (
+  const calendars = useSelector(selectCalendars)
+  const [selectedCalendars, setSelectedCalendars] = useState<
+    Array<{ id: String }>
+  >([])
+  const renderedCalendars = calendars.data.map((calendar) => (
     <Menu.Item key={calendar.id}>
       <Checkbox
         checked={selectedCalendars && selectedCalendars.includes(calendar)}
@@ -20,15 +21,15 @@ function SideBar() {
         {calendar.id}
       </Checkbox>
     </Menu.Item>
-  ));
+  ))
 
-  function onCalendarSelected(checked, calendar) {
+  function onCalendarSelected(checked: Boolean, calendar: { id: String }) {
     if (checked && !selectedCalendars.includes(calendar)) {
-      setSelectedCalendars([...selectedCalendars, calendar]);
+      setSelectedCalendars([...selectedCalendars, calendar])
     } else {
       setSelectedCalendars(
         selectedCalendars.filter((c) => c.id !== calendar.id)
-      );
+      )
     }
   }
 
@@ -48,7 +49,7 @@ function SideBar() {
         </SubMenu>
       </Menu>
     </Sider>
-  );
+  )
 }
 
-export default SideBar;
+export default SideBar
