@@ -1,7 +1,7 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/dist/query"
-import authTokensSlice from "./redux/authTokensSlice"
-import calendarsSlice from "./redux/calendarsSlice"
+import authTokensSlice from "./features/authentication/authTokensSlice"
+import calendarsSlice from "./features/availability/calendarsSlice"
 
 export const store = configureStore({
   reducer: {

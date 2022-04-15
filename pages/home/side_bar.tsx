@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { CalendarOutlined } from "@ant-design/icons"
 import { Menu, Layout, Checkbox } from "antd"
 import { useSelector } from "react-redux"
-import { selectCalendars } from "../../redux/calendarsSlice"
+import { selectCalendars } from "../../features/availability/calendarsSlice"
 
 const { SubMenu } = Menu
 const { Sider } = Layout
