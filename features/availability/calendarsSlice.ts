@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { AppState } from "../../store"
+import { AppState } from "../../app/store"
 
 const initialState = {
   data: [{ id: "john@gmail.com" }, { id: "will@gmail.com" }],

@@ -1,21 +1,23 @@
+import { Spin } from "antd"
 import type { NextPage } from "next"
+import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
-import { useEffect } from "react"
-import { useSelector } from "react-redux"
-import { selectAuthTokens } from "../redux/authTokensSlice"
+import Center from "../components/center"
+import Home from "./home"
 
 const IndexPage: NextPage = () => {
-  const authTokens = useSelector(selectAuthTokens)
+  const { status } = useSession({
+    required: true,
+    onUnauthenticated(): void {
+      router.push("/login")
+    },
+  })
   const router = useRouter()
 
-  useEffect(() => {
-    if (authTokens && authTokens.token) {
-      console.log("authCode")
-    } else {
-      router.push("/login")
-    }
-  }, [authTokens, router])
-  return null
+  if (status === "loading") {
+    return <Center element={<Spin />} />
+  }
+  return Home()
 }
 
 export default IndexPage

@@ -1,17 +1,31 @@
+import { Layout } from "antd"
 import "antd/dist/antd.css"
+import { SessionProvider } from "next-auth/react"
 import type { AppProps } from "next/app"
 import { Provider } from "react-redux"
-import Layout from "../components/layout"
-import { store } from "../store"
+import { store } from "../app/store"
+import Footer from "../components/footer"
 import "../styles/globals.css"
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <Provider store={store}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </Provider>
+    <SessionProvider session={session}>
+      <Provider store={store}>
+        <Layout
+          style={{
+            padding: "0 20px",
+            display: "flex",
+            flexDirection: "column",
+            height: "100vh",
+          }}
+        >
+          <Layout style={{ flexGrow: 1 }}>
+            <Component {...pageProps} />
+          </Layout>
+          <Footer />
+        </Layout>
+      </Provider>
+    </SessionProvider>
   )
 }
 
