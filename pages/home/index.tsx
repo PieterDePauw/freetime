@@ -1,10 +1,11 @@
-import { SearchOutlined, LogoutOutlined } from "@ant-design/icons"
+import { LogoutOutlined, SearchOutlined } from "@ant-design/icons"
 import { Button, Col, DatePicker, Layout, Row, Space, TimePicker } from "antd"
 import { signOut } from "next-auth/react"
+import { NextAuthPage } from "../../app/types"
 import SideBar from "./side_bar"
 const { Content } = Layout
 
-function Home() {
+const HomePage: NextAuthPage = () => {
   return (
     <>
       <SideBar />
@@ -21,7 +22,11 @@ function Home() {
             </Space>
           </Col>
           <Col lg={2} md={5} style={{ textAlign: "center" }}>
-            <Button type="dashed" shape="round" icon={<LogoutOutlined />} onClick={()=> signOut()}>
+            <Button
+              type="dashed"
+              shape="round"
+              icon={<LogoutOutlined />}
+              onClick={() => signOut()}>
               Logout
             </Button>
           </Col>
@@ -30,4 +35,6 @@ function Home() {
     </>
   )
 }
-export default Home
+
+HomePage.authenticationRequired = true
+export default HomePage

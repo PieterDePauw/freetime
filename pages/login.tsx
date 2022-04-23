@@ -1,24 +1,21 @@
 import { GoogleOutlined } from "@ant-design/icons"
-import { Button, Layout, message, Space, Typography } from "antd"
-import { NextPage } from "next"
-import { signIn, SignInResponse, useSession } from "next-auth/react"
+import { Button, Layout, Space, Typography } from "antd"
+import { signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
+import { NextAuthPage } from "../app/types"
 import Center from "../components/center"
 
 const { Content } = Layout
 const { Text } = Typography
 
-const Login: NextPage = () => {
-  const { data: session } = useSession()
+const LoginPage: NextAuthPage = () => {
+  const { status } = useSession({ required: false })
   const router = useRouter()
-  const onLoginClick: React.MouseEventHandler = (e) => {
-    signIn("google", { callbackUrl: process.env.REDIRECT_URL })
-  }
 
   useEffect(() => {
-    if (session) {
-      router.replace("home")
+    if (status === "authenticated") {
+      router.push("/home")
     }
   })
 
@@ -34,7 +31,9 @@ const Login: NextPage = () => {
               type="primary"
               size="large"
               icon={<GoogleOutlined />}
-              onClick={onLoginClick}>
+              onClick={() =>
+                signIn("google", { callbackUrl: process.env.REDIRECT_URL })
+              }>
               Sign in with Google
             </Button>
           </Space>
@@ -44,4 +43,6 @@ const Login: NextPage = () => {
   )
 }
 
-export default Login
+LoginPage.authenticationRequired = false
+
+export default LoginPage
