@@ -4,7 +4,7 @@ import Google from "../../../helpers/google";
 import {AvailableCalendarSearchParams} from "../../../app/types";
 import moment from "moment-timezone";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const freeBusyHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     const token = await getToken({req})
     if (!token) return res.status(401).end()
@@ -27,3 +27,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(405).end()
   }
 }
+
+export default freeBusyHandler

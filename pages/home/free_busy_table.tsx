@@ -24,7 +24,7 @@ const errorColumn: ColumnType<FreeBusyCalendar.Error> = {
 const busyColumn: ColumnType<FreeBusyCalendar.Error> = {
   title: "Busy",
   dataIndex: "busy",
-  render: busies => (busies.map((busy: FreeBusyCalendar.Busy, i: number) => <Tag color="warning">{busy.start} - {busy.end}</Tag>))
+  render: busies => (busies.map((busy: FreeBusyCalendar.Busy, i: number) => <Tag color="warning" key={i}>{busy.start} - {busy.end}</Tag>))
 }
 const columns: any = [
   {
