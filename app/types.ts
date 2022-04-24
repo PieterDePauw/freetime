@@ -1,5 +1,5 @@
-import { NextComponentType, NextPage, NextPageContext } from "next"
-import { AppProps } from "next/app"
+import {NextComponentType, NextPage, NextPageContext} from "next"
+import {AppProps} from "next/app"
 
 /**
  * Authentication configuration
@@ -15,3 +15,8 @@ export type AppAuthProps = AppProps & {
 }
 
 export type NextAuthPage = NextPage & AuthEnabledComponentConfig
+
+export interface GoogleCalendar {
+  id: string,
+  name: string | undefined
+}
