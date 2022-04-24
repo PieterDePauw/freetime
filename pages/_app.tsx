@@ -9,11 +9,13 @@ import { AppAuthProps } from "../app/types"
 import Center from "../components/center"
 import Footer from "../components/footer"
 import "../styles/globals.css"
+import moment from "moment-timezone"
 
 export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
 }: AppAuthProps) {
+  moment.tz.setDefault("Asia/Rangoon")
   return (
     <SessionProvider session={session}>
       <Provider store={store}>

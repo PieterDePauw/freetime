@@ -1,60 +1,48 @@
-import React, {useEffect, useState} from "react"
+import React from "react"
 import {CalendarOutlined} from "@ant-design/icons"
 import {Checkbox, Collapse, List, Space, Typography} from "antd"
-import {getCalendarListAsync, selectCalendarState} from "../../features/availability/calendarsSlice"
-import {useAppDispatch} from "../../app/hooks";
-import {GoogleCalendar} from "../../app/types";
-import {useSelector} from "react-redux";
+import {Calendar} from "../../app/types";
 
 const {Text} = Typography
 const {Panel} = Collapse
 
-function CalendarList() {
-  const {data: calendars, error, status} = useSelector(selectCalendarState)
-  const dispatch = useAppDispatch()
-  const [selectedCalendars, setSelectedCalendars] = useState<GoogleCalendar[]>([])
+interface CalendarListProps {
+  data: Calendar[]
+  loading: boolean
+  error?: string
+  isSelected: (calendar: Calendar) => boolean
+  onSelect: (calendar: Calendar) => void
+}
+
+function CalendarList({data, loading, error, onSelect, isSelected}: CalendarListProps) {
   const renderCalendars = () => {
-    switch (status) {
-      case "error":
-        return (<Text type="danger">{error}</Text>)
-      default:
-        return (
-          <List
-            itemLayout="vertical"
-            dataSource={calendars}
-            loading={status === "busy"}
-            renderItem={calendar => (
-              <List.Item id={calendar.id}>
-                <Checkbox
-                  checked={selectedCalendars && selectedCalendars.includes(calendar)}
-                  onChange={(e) => onCalendarSelected(e.target.checked, calendar)}
-                >
-                  {calendar.id}
-                </Checkbox>
-              </List.Item>
-            )}/>
-        )
-    }
-  }
-
-  useEffect(() => {
-    if (status !== "busy") {
-      dispatch(getCalendarListAsync())
-    }
-  }, [])
-
-  function onCalendarSelected(checked: Boolean, calendar: GoogleCalendar) {
-    if (checked && !selectedCalendars.includes(calendar)) {
-      setSelectedCalendars([...selectedCalendars, calendar])
+    if (error) {
+      return (<Text type="danger">{error}</Text>)
     } else {
-      setSelectedCalendars(
-        selectedCalendars.filter((c) => c.id !== calendar.id)
+      return (
+        <List
+          itemLayout="vertical"
+          dataSource={data}
+          loading={loading}
+          renderItem={calendar => (
+            <List.Item id={calendar.id}>
+              <Checkbox
+                checked={isSelected(calendar)}
+                onChange={(e) => onSelect(calendar)}
+              >
+                {calendar.id}
+              </Checkbox>
+            </List.Item>
+          )}/>
       )
     }
   }
 
+
   return (
+    // @ts-ignore
     <Collapse defaultActiveKey={['1']}>
+      {/*@ts-ignore*/}
       <Panel header={<Space><CalendarOutlined/>{"Calendars"}</Space>} key="1">
         {renderCalendars()}
       </Panel>

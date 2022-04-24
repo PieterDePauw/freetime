@@ -1,11 +1,10 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit"
 import {AppState} from "../../app/store"
 import axios from "axios";
-import {calendar_v3} from "googleapis";
-import {GoogleCalendar} from "../../app/types";
+import {Calendar, GoogleCalendar} from "../../app/types";
 
 interface CalendarsState {
-  data: GoogleCalendar[]
+  data: Calendar[]
   status: "idle" | "busy" | "error"
   error: string | undefined
 }
@@ -38,9 +37,9 @@ export const getCalendarListAsync = createAsyncThunk(
   "calendar/getList",
   async (_, thunkApi) => {
     const response = await axios.get("api/calendar/list")
-    const list = response.data as calendar_v3.Schema$CalendarListEntry[]
+    const list = response.data as GoogleCalendar[]
     return list.map(c => {
-      return {id: c.id} as GoogleCalendar
+      return {id: c.id} as Calendar
     })
   }
 )
